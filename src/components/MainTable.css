@@ -1,0 +1,16 @@
+.main-table {
+  margin: auto;
+  width: 90%;
+}
+
+table {
+  margin-top: 20px;
+}
+
+table thead th.col-question {
+  width: 30%;
+}
+
+table thead th.col-date {
+  width: 115px;
+}

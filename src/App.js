@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+import MainTable from './components/MainTable';
+import FaqItem from './components/FaqItem';
+import Login from './components/Login'
+
 import './App.css';
 
 function App() {
+
+  const [user, setUser] = useState({ userInfo: null});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <h1 className="main-header">Udacity AMA Transcripts</h1>
+      </div>
+      <Switch>
+        <Route exact path="/">
+          <MainTable user={user} />
+        </Route>
+        <Route path="/login">
+          <Login user={user} setUser={setUser} />
+        </Route>
+        <Route path="/item/:id?">
+          <FaqItem user={user} />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
