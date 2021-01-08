@@ -12,8 +12,8 @@ import Login from './components/Login'
 import './App.css';
 
 function App() {
-
   const [user, setUser] = useState({ userInfo: null});
+  document.title = 'Udacity AMA Transcripts - Phase 1 - AI for Business';
 
   return (
     <Router>
