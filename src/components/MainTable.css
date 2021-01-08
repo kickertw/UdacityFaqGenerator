@@ -15,6 +15,7 @@ table thead th.col-date {
   width: 115px;
 }
 
-tr.hide {
-  display: none;
+.form-inline {
+  margin-top: 20px;
+  padding-left: 0;
 }

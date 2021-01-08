@@ -11,6 +11,8 @@ function MainTable(props) {
   const [data, setData] = React.useState([]);
   const [userInfo, setUserInfo] = React.useState({ email: '' });
   const [searchText, setSearchText] = React.useState('');
+  const [count, setCount] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
   
   useEffect(() => {
     if (props.user.userInfo !== null) {
@@ -33,6 +35,8 @@ function MainTable(props) {
         tableData.push(newQa);
       });
       setData(tableData);
+      setCount(tableData.length);
+      setTotal(tableData.length);
     };
 
     fetchData();
@@ -46,13 +50,17 @@ function MainTable(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    tableData.foreach(item => {
-      if (!item.question.includes(searchText)) {
-        item.isFiltered = true;
-      } else {
+    var newData = data;
+    newData.forEach(item => {
+      if (searchText.length == 0 || item.question.includes(searchText) || item.answer.includes(searchText)) {
         item.isFiltered = false;
+      } else {
+        item.isFiltered = true;
       }
     });
+    
+    setData(newData);
+    setCount(data.filter(i => !i.isFiltered).length);
   }
 
   return (
@@ -79,7 +87,8 @@ function MainTable(props) {
         />
         <Button type="submit" className="mb-2">
           🔎
-        </Button>        
+        </Button>
+        <p>Showing {count} of {total} records.</p>
       </Form>
       <Table striped bordered hover responsive size="sm">
         <thead>
@@ -89,20 +98,32 @@ function MainTable(props) {
             <th className="col-date">AMA Date</th>
           </tr>
         </thead>
-        <tbody>
-          {data.map(item => (
-            <tr key={item.id} className={(item.isFiltered ? 'hide' : '')}>
-              { userInfo.email.length > 0 ? 
-                (<td><Link to={`/item/${item.id}`}>{item.question}</Link></td>) :
-                (<td>{item.question}</td>)
-              }
-              <td>{item.answer}</td>
-              <td>{item.ama_date}</td>
-            </tr>
-          ))}
+        <tbody>          
+          {data.map(item => {
+            if (!item.isFiltered) {
+              return (
+                <MainTableRow isLoggedIn={(userInfo.email.length > 0)} item={item}/>
+              )
+            }
+
+            return (null);
+          })}
         </tbody>
       </Table>    
     </div>
+  );
+}
+
+function MainTableRow(props) {
+  return (
+    <tr key={props.item.id}>
+      { props.isLoggedIn ? 
+        (<td><Link to={`/item/${props.item.id}`}>{props.item.question}</Link></td>) :
+        (<td>{props.item.question}</td>)
+      }
+      <td>{props.item.answer}</td>
+      <td>{props.item.ama_date}</td>
+    </tr>
   );
 }
 
