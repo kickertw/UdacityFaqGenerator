@@ -14,3 +14,7 @@ table thead th.col-question {
 table thead th.col-date {
   width: 115px;
 }
+
+tr.hide {
+  display: none;
+}
