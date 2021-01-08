@@ -52,7 +52,7 @@ function MainTable(props) {
     evt.preventDefault();
     var newData = data;
     newData.forEach(item => {
-      if (searchText.length == 0 || item.question.includes(searchText) || item.answer.includes(searchText)) {
+      if (searchText.length === 0 || item.question.includes(searchText) || item.answer.includes(searchText)) {
         item.isFiltered = false;
       } else {
         item.isFiltered = true;
