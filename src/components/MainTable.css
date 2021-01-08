@@ -14,3 +14,8 @@ table thead th.col-question {
 table thead th.col-date {
   width: 115px;
 }
+
+.form-inline {
+  margin-top: 20px;
+  padding-left: 0;
+}
