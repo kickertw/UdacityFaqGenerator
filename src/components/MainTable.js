@@ -103,7 +103,7 @@ function MainTable(props) {
           {data.map(item => {
             if (!item.isFiltered) {
               return (
-                <MainTableRow isLoggedIn={(userInfo.email.length > 0)} item={item}/>
+                <MainTableRow isLoggedIn={(userInfo.email.length > 0)} item={item} key={item.id} />
               )
             }
 

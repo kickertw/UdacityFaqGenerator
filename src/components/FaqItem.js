@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import DatePicker from 'react-datepicker';
 import { Trash } from 'react-bootstrap-icons';
+import { Editor } from '@tinymce/tinymce-react';
 
 import { useParams } from 'react-router-dom';
 import { useHistory, Link } from "react-router-dom";
@@ -15,7 +16,7 @@ function FaqItem(props) {
   const { id } = useParams();
   const itemRef = db.collection('faqs').doc(id);
   const [q, setQ] = useState('');
-  const [a, setA] = useState('');
+  const [answer, setAnswer] = useState('');
   const [amaDate, setAmaDate] = useState(new Date());
   const history = useHistory();
 
@@ -30,7 +31,7 @@ function FaqItem(props) {
       if (item.exists) {
         const tempItem = item.data();
         setQ(tempItem.question);
-        setA(tempItem.answer);
+        setAnswer(tempItem.answer);
 
         if (typeof tempItem.ama_date !== 'string') {
           setAmaDate(tempItem.ama_date.toDate());
@@ -41,6 +42,10 @@ function FaqItem(props) {
     };
 
     fetchData();
+    return () => {
+      setQ('');
+      setAnswer('');
+    }
   // eslint-disable-next-line
   }, []);
 
@@ -48,7 +53,7 @@ function FaqItem(props) {
     evt.preventDefault();
     const data = {
       question: q,
-      answer: a,
+      answer: answer,
       ama_date: amaDate
     };
 
@@ -84,13 +89,22 @@ function FaqItem(props) {
       </Form.Group>
       <Form.Group controlId="itemForm.Answer">
         <Form.Label>Answer:</Form.Label>
-        <Form.Control
-          required
-          as="textarea"
-          rows={3}
-          value={a}
-          onChange={e => setA(e.target.value)}
-        />
+        <Editor
+          apiKey='8un91eqna2uhxy0m3dgdmx0bzzut7k8ezprb1iv0xq7gpat3'
+          value={answer}
+          init={{
+            height: 200,
+            width: '50%',
+            menubar: false,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | bullist numlist outdent indent | link | removeformat | help'
+          }}
+          onEditorChange={(content, editor) => setAnswer(content)}
+        />        
         <Form.Control.Feedback type="invalid">
           Required
         </Form.Control.Feedback>

@@ -7,7 +7,8 @@ import {
 
 import MainTable from './components/MainTable';
 import FaqItem from './components/FaqItem';
-import Login from './components/Login'
+import Login from './components/Login';
+import TinyMceTest from './components/TinyMceTest';
 
 import './App.css';
 
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/item/:id?">
           <FaqItem user={user} />
+        </Route>
+        <Route path="/test">
+          <TinyMceTest />
         </Route>
       </Switch>
     </Router>
