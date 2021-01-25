@@ -99,9 +99,9 @@ function FaqItem(props) {
             plugins: [
               'advlist autolink lists link image charmap print preview anchor',
               'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount'
+              'insertdatetime media table paste code help wordcount emoticons'
             ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | bullist numlist outdent indent | link | removeformat | help'
+            toolbar: 'undo redo | formatselect | bold italic backcolor | bullist numlist outdent indent | link | removeformat | emoticons'
           }}
           onEditorChange={(content, editor) => setAnswer(content)}
         />        
